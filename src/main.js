@@ -41,6 +41,13 @@ camera.add(keyLight, keyLight.target);
 
 let rig = null;
 
+// Render on demand: drawing every frame keeps the main thread busy for nothing, and is
+// very costly where WebGL runs on the CPU (e.g. headless Chromium in Lighthouse).
+let needsRender = true;
+const requestRender = () => {
+  needsRender = true;
+};
+
 function resize() {
   const { clientWidth: w, clientHeight: h } = renderer.domElement.parentElement;
   renderer.setSize(w, h);
@@ -48,6 +55,7 @@ function resize() {
   camera.aspect = w / h;
   camera.updateProjectionMatrix();
   rig?.resize();
+  requestRender();
 }
 window.addEventListener('resize', resize);
 resize();
@@ -80,11 +88,19 @@ try {
     box,
     bodyLength: meta.bodyLength,
     onChange: () => {
+      requestRender();
       picking.invalidate();
       onCameraChange();
     },
   });
-  ({ onCameraChange } = initUI({ rig, axes, onAxesChange: () => picking.invalidate() }));
+  ({ onCameraChange } = initUI({
+    rig,
+    axes,
+    onAxesChange: () => {
+      requestRender();
+      picking.invalidate();
+    },
+  }));
 
   const gizmo = createGizmo({
     renderer,
@@ -92,14 +108,17 @@ try {
     flyRoot,
     element: document.getElementById('gizmo'),
     onFace: (preset) => rig.viewPreset(preset),
+    onChange: requestRender,
   });
 
-  if (import.meta.env.DEV) window.__viewer = { camera, scene, flyRoot, rig, axes, picking };
+  if (import.meta.env.DEV) window.__viewer = { renderer, camera, scene, flyRoot, rig, axes, picking };
 
   status.hidden = true;
   renderer.setAnimationLoop((now) => {
-    rig.update(now);
+    const moved = rig.update(now);
     picking.update();
+    if (!moved && !needsRender) return;
+    needsRender = false;
     renderer.render(scene, camera);
     labelRenderer.render(scene, camera);
     gizmo.render();

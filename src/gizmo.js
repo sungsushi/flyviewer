@@ -81,7 +81,7 @@ function faceTexture(letter, color, { u, v }, up) {
  * drawn into the area of `element` (an overlay that also takes the clicks, so they
  * don't reach the orbit controls). Clicking a face runs that face's view preset.
  */
-export function createGizmo({ renderer, camera, flyRoot, element, onFace }) {
+export function createGizmo({ renderer, camera, flyRoot, element, onFace, onChange = () => {} }) {
   const scene = new Scene();
   const gizmoCamera = new OrthographicCamera(-1, 1, 1, -1, 0.1, 10);
 
@@ -126,6 +126,7 @@ export function createGizmo({ renderer, camera, flyRoot, element, onFace }) {
     if (hovered >= 0) materials[hovered].color.set(0xffffff);
     if (index >= 0) materials[index].color.copy(HOVER_TINT);
     hovered = index;
+    onChange(); // the highlight needs a redraw
     element.style.cursor = index >= 0 ? 'pointer' : '';
     element.title = index >= 0 ? `${FACES[index].preset} view` : '';
   }

@@ -247,9 +247,14 @@ export function createCameraRig({ camera, domElement, flyRoot, box, bodyLength, 
   }
 
   return {
+    // Advance the camera; returns true if it moved this frame (animation, orbit damping).
+    // Trackball changes are reported through `onChange` instead.
     update(now) {
-      if (anim) stepAnimation(now);
-      else controls.update();
+      if (anim) {
+        stepAnimation(now);
+        return true;
+      }
+      return controls.update() === true;
     },
     resize() {
       trackball.handleResize();

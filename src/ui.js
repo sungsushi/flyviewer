@@ -62,6 +62,7 @@ function axesStateFromHash(params) {
   };
 }
 
+// `onAxesChange` is called whenever axes, planes or the origin change (redraw, re-pick).
 export function initUI({ rig, axes, onAxesChange = () => {} }) {
   const freeToggle = document.getElementById('free-rotate');
   const axisToggles = Object.fromEntries(
@@ -115,6 +116,7 @@ export function initUI({ rig, axes, onAxesChange = () => {} }) {
   function setAxis(key, visible) {
     axes.setVisible(key, visible);
     syncAxesControls();
+    onAxesChange();
     writeAxesHash();
   }
 
@@ -122,6 +124,7 @@ export function initUI({ rig, axes, onAxesChange = () => {} }) {
     const showAll = AXIS_KEYS.some((key) => !axes.isVisible(key));
     for (const key of AXIS_KEYS) axes.setVisible(key, showAll);
     syncAxesControls();
+    onAxesChange();
     writeAxesHash();
   }
 
@@ -136,10 +139,12 @@ export function initUI({ rig, axes, onAxesChange = () => {} }) {
   });
   planesToggle.addEventListener('change', () => {
     axes.setPlanesVisible(planesToggle.checked);
+    onAxesChange();
     writeAxesHash();
   });
   behindToggle.addEventListener('change', () => {
     axes.setBehindBody(behindToggle.checked);
+    onAxesChange();
     writeAxesHash();
   });
 
