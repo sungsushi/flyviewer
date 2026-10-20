@@ -113,6 +113,11 @@ try {
 
   if (import.meta.env.DEV) window.__viewer = { renderer, camera, scene, flyRoot, rig, axes, picking };
 
+  // Compile shaders before the first frame. Otherwise three.js compiles them on first
+  // use and waits for each one, a multi-second main-thread stall where WebGL runs on the
+  // CPU (Lighthouse measured 2.1 s). With KHR_parallel_shader_compile this doesn't block.
+  await Promise.all([renderer.compileAsync(scene, camera), gizmo.compile()]);
+
   status.hidden = true;
   renderer.setAnimationLoop((now) => {
     const moved = rig.update(now);

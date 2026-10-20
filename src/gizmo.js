@@ -139,6 +139,10 @@ export function createGizmo({ renderer, camera, flyRoot, element, onFace, onChan
   });
 
   return {
+    // Compile the cube's shaders without blocking the main thread (see main.js).
+    compile() {
+      return renderer.compileAsync(scene, gizmoCamera);
+    },
     // Call after the main render. Draws into the overlay element's rectangle.
     render() {
       // Look at the cube from the same direction the main camera looks at the fly.
