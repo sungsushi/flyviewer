@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Fly Viewer</title>
+    <meta
+      name="description"
+      content="Interactive 3D viewer of the adult fruit fly Drosophila melanogaster (NeuroMechFly model), with anatomical axes, view presets and a hover readout of body segments."
+    />
+    <meta name="theme-color" content="#8c9096" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cellipse cx='16' cy='18' rx='7' ry='10' fill='%23a5752f'/%3E%3Ccircle cx='16' cy='7' r='5' fill='%23a5752f'/%3E%3Ccircle cx='13' cy='6' r='2.4' fill='%23b3361f'/%3E%3Ccircle cx='19' cy='6' r='2.4' fill='%23b3361f'/%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <div id="viewer"></div>
+    <div id="status">Loading fly…</div>
+
+    <details id="panel" open>
+      <summary>Controls</summary>
+      <div class="panel-body">
+        <div class="row" role="group" aria-label="View presets">
+          <button type="button" data-view="dorsal">Dorsal</button>
+          <button type="button" data-view="ventral">Ventral</button>
+          <button type="button" data-view="left">Left</button>
+          <button type="button" data-view="right">Right</button>
+          <button type="button" data-view="anterior">Anterior</button>
+          <button type="button" data-view="posterior">Posterior</button>
+        </div>
+        <div class="row">
+          <button type="button" id="reset-view" title="Reset view (R)">Reset</button>
+          <label><input type="checkbox" id="free-rotate" /> Free rotate</label>
+        </div>
+        <div class="row" role="group" aria-label="Anatomical axes">
+          <span class="row-title">Axes</span>
+          <label title="Anterior–posterior (1)"><input type="checkbox" data-axis="ap" /><span class="swatch" style="--axis-color: #d94841"></span>A–P</label>
+          <label title="Dorsal–ventral (2)"><input type="checkbox" data-axis="dv" /><span class="swatch" style="--axis-color: #3a7bd5"></span>D–V</label>
+          <label title="Left–right (3)"><input type="checkbox" data-axis="lr" /><span class="swatch" style="--axis-color: #2e9e5b"></span>L–R</label>
+          <label title="All axes (A)"><input type="checkbox" id="axes-all" />All</label>
+        </div>
+        <div class="row">
+          <label>Origin
+            <select id="axes-origin">
+              <option value="center">Body centre</option>
+              <option value="thorax">Thorax</option>
+            </select>
+          </label>
+          <label><input type="checkbox" id="axes-behind" />Axes behind body</label>
+          <label><input type="checkbox" id="planes" />Planes</label>
+        </div>
+        <p class="credit">
+          Model: <a href="https://neuromechfly.org" target="_blank" rel="noopener">NeuroMechFly</a>
+          (flygym 2.1.0, Apache-2.0) ·
+          <a href="./THIRD_PARTY_LICENSES.txt" target="_blank" rel="noopener">Licences</a>
+        </p>
+      </div>
+    </details>
+
+    <div id="gizmo" aria-hidden="true"></div>
+
+    <div id="readout" hidden>
+      <div><span class="readout-name"></span> <code class="readout-id"></code></div>
+      <div class="readout-pos"></div>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

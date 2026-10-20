@@ -1,0 +1,6 @@
+# Exact pins. flygym 2.1.0 requires mujoco>=3.9,<3.10; 3.9.0 is what it resolves to.
+flygym==2.1.0
+mujoco==3.9.0
+numpy==2.5.4
+PyYAML==6.0.3
+trimesh==5.1.1

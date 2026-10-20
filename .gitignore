@@ -1,0 +1,19 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# flygym sparse checkout (fetched by tools/fetch_flygym.sh)
+vendor/
+
+# Bake intermediates (public/fly.glb and public/fly.meta.json ARE committed)
+build/
+
+# Node / Vite
+node_modules/
+dist/
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/

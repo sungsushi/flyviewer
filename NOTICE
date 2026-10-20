@@ -1,0 +1,29 @@
+flyviewer
+Licensed under the Apache License, Version 2.0 (see LICENSE).
+
+This project includes 3D meshes and model data derived from NeuroMechFly,
+distributed with the flygym package:
+
+  flygym 2.1.0 (https://github.com/NeLy-EPFL/flygym)
+  commit 38c8ec61034cd59bc5ba0de20688d4a3c0000d60
+  Copyright 2023-2026 The NeuroMechFly v2 Authors
+  Licensed under the Apache License, Version 2.0
+
+The file public/fly.glb is a derivative work: it was generated from flygym's
+simplified NeuroMechFly meshes (src/flygym/assets/model/neuromechfly/), posed
+in flygym's neutral pose with MuJoCo forward kinematics, mirrored for the right
+side, recoloured from visuals.yaml and compressed. See tools/bake_fly.py.
+
+The built website bundles three.js (MIT, Copyright 2010-2026 three.js authors)
+and the meshoptimizer decoder (MIT, Copyright 2016-2026 Arseny Kapoulkine). Their
+licence texts are in public/THIRD_PARTY_LICENSES.txt, which is deployed with the site.
+
+If you use this work, please cite NeuroMechFly:
+
+  Lobato-Rios V. et al. NeuroMechFly, a neuromechanical model of adult
+  Drosophila melanogaster. Nature Methods 19, 620-627 (2022).
+  https://doi.org/10.1038/s41592-022-01466-7
+
+  Wang-Chen S. et al. NeuroMechFly v2: simulating embodied sensorimotor
+  control in adult Drosophila. Nature Methods 21, 2353-2362 (2024).
+  https://doi.org/10.1038/s41592-024-02497-y

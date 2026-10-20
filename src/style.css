@@ -1,0 +1,208 @@
+:root {
+  /* Neutral mid-grey: readable against both light and dark surroundings. */
+  --bg: #8c9096;
+  --fg: #1d1f22;
+  --panel-bg: rgb(255 255 255 / 0.82);
+  --panel-border: rgb(0 0 0 / 0.12);
+  --button-bg: #fff;
+  --button-hover: #eef0f2;
+  --focus: #1a5fb4;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--fg);
+  font: 14px/1.4 system-ui, sans-serif;
+}
+
+#viewer {
+  position: fixed;
+  inset: 0;
+  touch-action: none;
+}
+
+#viewer canvas {
+  display: block;
+}
+
+.label-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* Axis labels: letter by default, full word on hover. Colour is never the only cue. */
+.axis-label {
+  padding: 2px 6px;
+  font: 600 13px/1.2 system-ui, sans-serif;
+  color: var(--fg);
+  background: rgb(255 255 255 / 0.9);
+  border: 2px solid var(--axis-color);
+  border-radius: 5px;
+  white-space: nowrap;
+  user-select: none;
+  pointer-events: auto;
+}
+
+.axis-label .long,
+.axis-label:hover .short {
+  display: none;
+}
+
+.axis-label:hover .long {
+  display: inline;
+}
+
+#status {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  text-align: center;
+  pointer-events: none;
+}
+
+#status[hidden] {
+  display: none;
+}
+
+#panel {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  max-width: calc(100vw - 24px);
+  box-sizing: border-box;
+  padding: 8px;
+  background: var(--panel-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: 8px;
+  backdrop-filter: blur(6px);
+}
+
+#panel summary {
+  cursor: pointer;
+  font-weight: 600;
+  user-select: none;
+}
+
+#panel .panel-body {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+#panel .row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 6px;
+}
+
+#panel button {
+  font: inherit;
+  color: inherit;
+  padding: 4px 10px;
+  min-height: 30px;
+  background: var(--button-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+#panel button:hover {
+  background: var(--button-hover);
+}
+
+#panel :focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 1px;
+}
+
+#panel .credit {
+  margin: 0;
+  font-size: 12px;
+}
+
+#panel .credit a {
+  color: inherit;
+}
+
+#panel .row-title {
+  font-weight: 600;
+}
+
+#panel select {
+  font: inherit;
+}
+
+#panel .swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  background: var(--axis-color);
+}
+
+#panel label {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.plane-label {
+  padding: 1px 4px;
+  font: italic 12px/1.2 system-ui, sans-serif;
+  color: var(--fg);
+  background: rgb(255 255 255 / 0.7);
+  border-radius: 3px;
+  white-space: nowrap;
+}
+
+/* Orientation cube: an empty overlay that takes the clicks; the cube itself is drawn
+   into this rectangle of the main canvas. */
+#gizmo {
+  position: fixed;
+  left: 16px;
+  bottom: 16px;
+  width: 96px;
+  height: 96px;
+  touch-action: none;
+}
+
+#readout {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  max-width: calc(100vw - 96px - 48px);
+  box-sizing: border-box;
+  padding: 6px 10px;
+  background: var(--panel-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: 8px;
+  pointer-events: none;
+}
+
+#readout[hidden] {
+  display: none;
+}
+
+#readout .readout-name {
+  font-weight: 600;
+}
+
+#readout .readout-id {
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+#readout .readout-pos {
+  font-variant-numeric: tabular-nums;
+  white-space: pre-wrap;
+}
